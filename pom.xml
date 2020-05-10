@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.codwh</groupId>
+    <artifactId>scalable-framework</artifactId>
+    <version>1.0.0</version>
+    <modules>
+        <module>redisson-framework</module>
+        <module>framework-avaliability-check</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <core.version>1.0.0</core.version>
+        <log4j2.version>2.1</log4j2.version>
+        <!-- redisson -->
+        <redisson.version>3.12.5</redisson.version>
+        <!-- Jasypt is a java library which allows the developer to add basic encryption capabilities to his/her
+        projects with minimum effort, and without the need of having deep knowledge on how cryptography works.-->
+        <jasypt.version>1.14</jasypt.version>
+        <!-- A set of tools that keep Java sweet -->
+        <huttol.version>4.1.13</huttol.version>
+        <fastjson.version>1.2.60</fastjson.version>
+        <!-- high performance queue -->
+        <disruptor.version>3.4.1</disruptor.version>
+        <!-- spring core version -->
+        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+        <spring-platform.version>Cairo-SR3</spring-platform.version>
+        <spring.social.version>1.1.6.RELEASE</spring.social.version>
+        <spring-security.version>5.1.1.RELEASE</spring-security.version>
+        <spring-oauth2.version>2.3.6.RELEASE</spring-oauth2.version>
+        <spring-cloud-dependencies.version>Hoxton.SR2</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.2.2.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <!-- tools for operation on collections -->
+        <commons-collections4.version>4.1</commons-collections4.version>
+        <!-- runtime data validator tool -->
+        <hibernate-validator.version>5.0.2.Final</hibernate-validator.version>
+        <!-- easy tool for developers to embed their apps in jar format into different containers -->
+        <flowable.version>6.4.1</flowable.version>
+
+        <!-- project encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections4.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Micrometer Prometheus registry -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${spring-platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${security-oauth2.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

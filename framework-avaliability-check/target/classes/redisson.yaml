@@ -1,0 +1,2 @@
+singleServerConfig:
+  address: redis://101.37.119.147:6379
