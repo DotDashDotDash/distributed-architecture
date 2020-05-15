@@ -1,4 +1,0 @@
-spring:
-  redis:
-    redisson:
-      config: classpath:redisson.yaml
