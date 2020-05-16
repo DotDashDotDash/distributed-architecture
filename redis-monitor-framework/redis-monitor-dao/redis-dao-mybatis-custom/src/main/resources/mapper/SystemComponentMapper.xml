@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.codwh.redis.custom.dao.ISystemComponentDao">
+    <resultMap id="systemComponentMap" type="org.codwh.redis.custom.model.system.SystemComponent">
+        <result property="id" column="id"/>
+        <result property="componentName" column="component_key"/>
+        <result property="componentValue" column="component_value"/>
+        <result property="keyConfig" column="key_config"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.codwh.redis.custom.model.system.SystemComponent">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+        INSERT INTO system_component (
+        <trim suffixOverrides=",">
+            id,
+            component_key,
+            component_value,
+            key_config,
+            create_user_name,
+            create_time
+        </trim>
+        )VALUES (
+        <trim suffixOverrides=",">
+            #{id},
+            #{componentKey},
+            #{componentValue},
+            #{keyConfig},
+            #{createUserName},
+            #{createTime}
+        </trim>
+        )
+    </insert>
+
+    <update id="updateById" parameterType="org.codwh.redis.custom.model.system.SystemComponent">
+        UPDATE system_component
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null">id = #{id}</if>
+            <if test="componentName != null">component_key = #{componentName}</if>
+            <if test="componentValue != null">component_value = #{componentValue}</if>
+            <if test="keyConfig != null">key_config = #{keyConfig}</if>
+            <if test="createUserName != null">create_user_name = #{createUserName}</if>
+            <if test="createTime != null">create_time = #{createTime}</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM system_component WHERE id = #{id}
+    </delete>
+
+    <select id="getById" parameterType="Integer" resultMap="systemComponentMap">
+        SELECT * FROM system_component WHERE id = #{id}
+    </select>
+
+    <select id="getListByCriteria" resultMap="systemComponentMap"
+            parameterType="org.codwh.redis.custom.model.system.SystemComponent">
+        SELECT * FROM system_component
+        <include refid="select_where_clause"/>
+        ORDER BY id DESC
+    </select>
+
+    <select id="getListByApplicationId" resultMap="systemComponentMap" parameterType="Integer">
+        SELECT a.* FROM system_component AS a, system_application_component AS b
+        WHERE a.id = b.component_id AND b.application_id = #{applicationId}
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="componentName != null">AND component_key = #{componentName}</if>
+            <if test="componentValue != null">AND component_value = #{componentValue}</if>
+            <if test="keyConfig != null">AND key_config = #{keyConfig}</if>
+            <if test="createUserName != null">AND create_user_name = #{createUserName}</if>
+            <if test="createTime != null">AND create_time = #{createTime}</if>
+        </trim>
+    </sql>
+
+    <sql id="page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="queryObject.id != null">AND id = #{queryObject.id}</if>
+            <if test="queryObject.componentName != null">AND component_key = #{queyObject.componentName}</if>
+            <if test="queryObject.componentValue != null">AND component_value = #{queryObject.componentValue}</if>
+            <if test="queryObject.keyConfig != null">AND key_config = #{queryObject.keyConfig}</if>
+            <if test="queryObject.createUserName != null">AND create_user_name = #{queryObject.createUserName}</if>
+            <if test="queryObject.createTime != null">AND create_time = #{queryObject.createTime}</if>
+        </trim>
+    </sql>
+
+    <select id="queryForList" resultMap="systemComponentMap">
+        SELECT * FROM system_component
+        <include refid="page_where_clause"/>
+        ORDER BY id DESC
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.begin}
+        </if>
+    </select>
+
+    <select id="count" resultType="Integer" parameterType="org.codwh.redis.custom.model.system.SystemComponent">
+        SELECT COUNT(*) FROM system_component
+        <include refid="page_where_clause"/>
+    </select>
+</mapper>

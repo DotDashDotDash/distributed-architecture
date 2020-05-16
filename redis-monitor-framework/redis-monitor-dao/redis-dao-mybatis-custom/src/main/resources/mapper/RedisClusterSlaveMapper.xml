@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.codwh.redis.custom.dao.IRedisClusterSlaveDao">
+    <resultMap id="RedisClusterSlaveMap" type="org.codwh.redis.custom.model.redis.RedisClusterSlave">
+        <result property="id" column="id"/>
+        <result property="redisServerHost" column="redis_server_host"/>
+        <result property="redisServerPort" column="redis_server_port"/>
+        <result property="clusterStatus" column="runner_status"/>
+        <result property="redisServerStatus" column="redis_server_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="redisMasterId" column="redis_master_id"/>
+        <result property="operationStatus" column="oprate_status"/>
+        <result property="version" column="version"/>
+        <result property="weight" column="weight"/>
+        <result property="zkPath" column="path"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.codwh.redis.custom.model.redis.RedisClusterSlave">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO redis_cluster_slave (
+        <trim suffixOverrides=",">
+            id,
+            redis_server_host,
+            redis_server_port,
+            runner_status,
+            redis_server_status,
+            create_time,
+            redis_master_id,
+            oprate_status,
+            version,
+            weight,
+            path,
+        </trim>
+        )VALUES(
+        <trim suffixOverrides=",">
+            #{id},
+            #{redisServerHost},
+            #{redisServerPort},
+            #{clusterStatus},
+            #{redisServerStatus},
+            #{createTime},
+            #{redisMasterId},
+            #{operationStatus},
+            #{version},
+            #{weight},
+            #{zkPath},
+        </trim>
+        )
+    </insert>
+
+    <update id="updateById" parameterType="org.codwh.redis.custom.model.redis.RedisClusterSlave">
+        update redis_cluster_slave
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="id != null">id = #{id},</if>
+            <if test="redisServerHost != null">redis_server_host = #{redisServerHost},</if>
+            <if test="redisServerPort != null">redis_server_port = #{redisServerPort},</if>
+            <if test="clusterStatus != null">runner_status = #{clusterStatus},</if>
+            <if test="redisServerStatus != null">redis_server_status = #{redisServerStatus},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="redisMasterId != null">redis_master_id = #{redisMasterId},</if>
+            <if test="operationStatus != null">oprate_status = #{operationStatus},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="zkPath != null">path = #{zkPath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="Integer">
+        delete
+        from redis_cluster_slave
+        where id = #{id}
+    </delete>
+
+    <select id="getById" parameterType="Integer" resultMap="RedisClusterSlaveMap">
+        select *
+        from redis_cluster_slave
+        where id = #{id}
+    </select>
+
+    <select id="getListByCriteria" resultMap="RedisClusterSlaveMap"
+            parameterType="org.codwh.redis.custom.model.redis.RedisClusterSlave">
+        select * from redis_cluster_slave
+        <include refid="select_where_clause"/>
+        order by id desc
+    </select>
+
+    <sql id="select_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="id != null">AND id = #{id}</if>
+            <if test="redisServerHost != null">AND redis_server_host = #{redisServerHost}</if>
+            <if test="redisServerPort != null">AND redis_server_port = #{redisServerPort}</if>
+            <if test="clusterStatus != null">AND runner_status = #{clusterStatus}</if>
+            <if test="redisServerStatus != null">AND redis_server_status = #{redisServerStatus}</if>
+            <if test="createTime != null">AND create_time = #{createTime}</if>
+            <if test="redisMasterId != null">AND redis_master_id = #{redisMasterId}</if>
+            <if test="operationStatus != null">AND oprate_status = #{operationStatus}</if>
+            <if test="version != null">AND version = #{version}</if>
+            <if test="weight != null">weight = #{weight}</if>
+            <if test="zkPath != null">path = #{zkPath}</if>
+        </trim>
+    </sql>
+
+    <select id="queryPageList" resultMap="RedisClusterSlaveMap">
+        select * from redis_cluster_slave
+        <include refid="page_where_clause"/>
+        order by id desc
+        <if test="page!=null">
+            LIMIT #{page.pageSize} OFFSET #{page.begin}
+        </if>
+    </select>
+
+    <select id="count" resultType="int" parameterType="org.codwh.redis.custom.model.redis.RedisClusterSlave">
+        select count(*) from redis_cluster_slave
+        <include refid="page_where_clause"/>
+    </select>
+
+    <sql id="page_where_clause">
+        <trim prefix="where" prefixOverrides="AND|OR">
+            <if test="queryObject.id != null">AND id = #{queryObject.id}</if>
+            <if test="queryObject.redisServerHost != null">AND redis_server_host = #{queryObject.redisServerHost}</if>
+            <if test="queryObject.redisServerPort != null">AND redis_server_port = #{queryObject.redisServerPort}</if>
+            <if test="queryObject.clusterStatus != null">AND runner_status = #{queryObject.clusterStatus}</if>
+            <if test="queryObject.redisServerStatus != null">AND redis_server_status =
+                #{queryObject.redisServerStatus}
+            </if>
+            <if test="queryObject.createTime != null">AND create_time = #{queryObject.createTime}</if>
+            <if test="queryObject.redisMasterId != null">AND redis_master_id = #{queryObject.redisMasterId}</if>
+            <if test="queryObject.operationStatus != null">AND oprate_status = #{queryObject.operationStatus}</if>
+            <if test="queryObject.version != null">AND version = #{queryObject.version}</if>
+            <if test="queryObject.weight != null">weight = #{queryObject.weight}</if>
+            <if test="queryObject.zkPath != null">path = #{queryObject.zkPath}</if>
+        </trim>
+    </sql>
+    <!--extension script-->
+    <select id="getListByMasterId" resultMap="RedisClusterSlaveMap">
+        select *
+        from redis_cluster_slave
+        where redis_server_status = 2
+          and oprate_status = 1
+          and runner_status = 1
+          and redis_master_id = #{masterId}
+        order by id asc
+        LIMIT 0 ,50
+    </select>
+    <!--乐观锁  -->
+    <update id="updateVersionByIdAndVersion" parameterType="org.codwh.redis.custom.model.redis.RedisClusterSlave">
+        update redis_cluster_slave
+        set version       = #{version} + 1,
+            oprate_status = #{oprationStatus}
+        where id = #{id}
+          and version = #{version}
+    </update>
+    <!--extension script-->
+</mapper>
