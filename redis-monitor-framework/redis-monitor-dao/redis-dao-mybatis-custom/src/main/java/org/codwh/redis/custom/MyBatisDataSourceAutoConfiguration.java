@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -18,6 +19,7 @@ import javax.sql.DataSource;
         basePackages = "org.codwh.redis.dao",
         sqlSessionFactoryRef = "sqlSessionFactory"
 )
+@ComponentScan("org.codwh.redis.custom")
 @SuppressWarnings("all")
 public class MyBatisDataSourceAutoConfiguration {
 

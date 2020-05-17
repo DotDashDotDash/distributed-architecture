@@ -1,11 +1,14 @@
-package org.codwh.common.util;
+package org.codwh.common.util.JVM;
 
 import org.codwh.common.constants.TomcatStatus;
+import org.codwh.common.util.StringUtils;
 import org.quartz.core.jmx.QuartzSchedulerMBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.management.*;
+import javax.management.MBeanServerConnection;
+import javax.management.MBeanServerInvocationHandler;
+import javax.management.ObjectName;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
@@ -13,70 +16,57 @@ import javax.management.remote.JMXServiceURL;
 import java.lang.management.*;
 import java.util.*;
 
-public class JvmUtils {
-
-    static Logger logger = LoggerFactory.getLogger(JvmUtils.class);
-
-    /**
-     * 工具连接类
-     */
-    private static MBeanServerConnection mBeanServerConnection;
-
-    /**
-     * JMX监控url
-     */
-    private static final String MONITOR_URL = "service:jmx:rmi:///jndi/rmi://%s:%s/jmxrmi";
-
-    /**
-     * GC
-     */
-    private static final String GC = "java.lang:type=GarbageCollector";
-
-    /**
-     * MemoryPool
-     */
-    private static final String MEMORY = "java.lang:type=MemoryPool";
-
-    /**
-     * 操作系统
-     */
-    private static final String OPERATING_SYSTEM = "java.lang:type=OperatingSystem,*";
-
-    /**
-     * Eden区
-     */
-    private static final String MEMORY_EDEN = "Eden Space";
-
-    /**
-     * Survivor区
-     */
-    private static final String MEMORY_SURVIVOR = "Survivor Space";
-
-    /**
-     * Old区
-     */
-    private static final String MEMORY_OLD = "Old Space";
-
-    /**
-     * 永久代
-     */
-    private static final String MEMORY_PERM = "Perm Gen";
+public class JVMUtils {
 
     /**
      * Tomcat线程池
      */
     public static final String TOMCAT_THREAD_POOL = "Catalina:type=ThreadPool,*";
-
     /**
      * Tomcat会话池
      */
     public static final String TOMCAT_SESSION_POOL = "Catalina:type=Manager,*";
-
     /**
      * Quartz调度器
      */
     public static final String QUARTZ_SCHEDULER = "quartz:type=QuartzScheduler,*";
-
+    /**
+     * JMX监控url
+     */
+    private static final String MONITOR_URL = "service:jmx:rmi:///jndi/rmi://%s:%s/jmxrmi";
+    /**
+     * GC
+     */
+    private static final String GC = "java.lang:type=GarbageCollector";
+    /**
+     * MemoryPool
+     */
+    private static final String MEMORY = "java.lang:type=MemoryPool";
+    /**
+     * 操作系统
+     */
+    private static final String OPERATING_SYSTEM = "java.lang:type=OperatingSystem,*";
+    /**
+     * Eden区
+     */
+    private static final String MEMORY_EDEN = "Eden Space";
+    /**
+     * Survivor区
+     */
+    private static final String MEMORY_SURVIVOR = "Survivor Space";
+    /**
+     * Old区
+     */
+    private static final String MEMORY_OLD = "Old Space";
+    /**
+     * 永久代
+     */
+    private static final String MEMORY_PERM = "Perm Gen";
+    static Logger logger = LoggerFactory.getLogger(JVMUtils.class);
+    /**
+     * 工具连接类
+     */
+    private static MBeanServerConnection mBeanServerConnection;
     /**
      * JMX连接器
      */
@@ -323,6 +313,57 @@ public class JvmUtils {
     }
 
     /**
+     * 获取调用栈的信息
+     *
+     * @return
+     */
+    public static String getStackMessage() {
+        StringBuilder stackInfo = new StringBuilder();
+        Throwable ex = new Throwable();
+        for (StackTraceElement elem : getStackElements()) {
+            stackInfo.append(elem.toString());
+            stackInfo.append("\r\n");
+        }
+        return stackInfo.toString();
+    }
+
+    /**
+     * 获取调用栈元素
+     *
+     * @return
+     */
+    public static StackTraceElement[] getStackElements() {
+        Throwable ex = new Throwable();
+        return ex.getStackTrace();
+    }
+
+    /**
+     * 获取JVM中所有的线程
+     *
+     * @return
+     */
+    public static Thread[] getAllJvmThreads() {
+        ThreadGroup group = Thread.currentThread().getThreadGroup().getParent();
+        int estimatedSize = group.activeCount() * 2;
+        Thread[] temp = new Thread[estimatedSize];
+        int actualSize = group.enumerate(temp);
+        Thread[] res = new Thread[actualSize];
+        System.arraycopy(temp, 0, res, 0, actualSize);
+        return res;
+    }
+
+    /**
+     * 获取JVM已经启动的线程的信息
+     *
+     * @return
+     */
+    public static ThreadInfo[] getJvmThreadInfo() {
+        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+        ThreadInfo[] res = threadMXBean.dumpAllThreads(false, false);
+        return res;
+    }
+
+    /**
      * 获取tomcat 运行线程
      *
      * @return
@@ -426,57 +467,6 @@ public class JvmUtils {
                 break;
             }
         }
-    }
-
-    /**
-     * 获取调用栈的信息
-     *
-     * @return
-     */
-    public static String getStackMessage() {
-        StringBuilder stackInfo = new StringBuilder();
-        Throwable ex = new Throwable();
-        for (StackTraceElement elem : getStackElements()) {
-            stackInfo.append(elem.toString());
-            stackInfo.append("\r\n");
-        }
-        return stackInfo.toString();
-    }
-
-    /**
-     * 获取调用栈元素
-     *
-     * @return
-     */
-    public static StackTraceElement[] getStackElements() {
-        Throwable ex = new Throwable();
-        return ex.getStackTrace();
-    }
-
-    /**
-     * 获取JVM中所有的线程
-     *
-     * @return
-     */
-    public static Thread[] getAllJvmThreads() {
-        ThreadGroup group = Thread.currentThread().getThreadGroup().getParent();
-        int estimatedSize = group.activeCount() * 2;
-        Thread[] temp = new Thread[estimatedSize];
-        int actualSize = group.enumerate(temp);
-        Thread[] res = new Thread[actualSize];
-        System.arraycopy(temp, 0, res, 0, actualSize);
-        return res;
-    }
-
-    /**
-     * 获取JVM已经启动的线程的信息
-     *
-     * @return
-     */
-    public static ThreadInfo[] getJvmThreadInfo() {
-        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-        ThreadInfo[] res = threadMXBean.dumpAllThreads(false, false);
-        return res;
     }
 
     public static class MemorySpaceBean {

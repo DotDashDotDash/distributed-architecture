@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.codwh.redis.custom.constant.PageProperties;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分页接口，定义了DAO分页的规范，如果有DAO需要实现分页，那么需要继承这个接口

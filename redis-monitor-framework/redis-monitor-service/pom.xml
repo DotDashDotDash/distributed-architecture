@@ -17,15 +17,15 @@
     <dependencies>
         <dependency>
             <groupId>org.codwh</groupId>
-            <artifactId>redis-monitor-dao</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.codwh</groupId>
             <artifactId>redis-monitor-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.codwh</groupId>
             <artifactId>redis-monitor-zookeeper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -53,6 +53,11 @@
         <dependency><!-- jedis -->
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codwh</groupId>
+            <artifactId>redis-dao-mybatis-custom</artifactId>
+            <version>${core.version}</version>
         </dependency>
     </dependencies>
 

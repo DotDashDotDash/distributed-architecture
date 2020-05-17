@@ -32,7 +32,7 @@ public class ZkUtils {
     /**
      * ZooKeeper客户端
      */
-    private static ZkClient zkClient;
+    private ZkClient zkClient;
 
     /**
      * ZooKeeper客户端初始化
@@ -49,7 +49,7 @@ public class ZkUtils {
      * @param path
      * @param data
      */
-    public static void setNodeData(String parentPath, String path, String data) {
+    public void setNodeData(String parentPath, String path, String data) {
         try {
             path = toNodePath(parentPath, path, ZkType.AVAILABLE_SERVER);
             zkClient.writeData(path, data);
@@ -65,7 +65,7 @@ public class ZkUtils {
      * @param path
      * @return
      */
-    public static String getNodeData(String parentPath, String path) {
+    public String getNodeData(String parentPath, String path) {
         String data = null;
         try {
             path = toNodePath(parentPath, path, ZkType.AVAILABLE_SERVER);
@@ -83,7 +83,7 @@ public class ZkUtils {
      * @param path
      * @return
      */
-    public static List<String> getChildren(String parentPath, String path) {
+    public List<String> getChildren(String parentPath, String path) {
         List<String> res = null;
         try {
             path = toNodePath(parentPath, path, ZkType.AVAILABLE_SERVER);
@@ -98,7 +98,7 @@ public class ZkUtils {
      *
      * @return
      */
-    public static List<String> getAllChildren() {
+    public List<String> getAllChildren() {
         try {
             String path = toNodeTypePath(ZkType.AVAILABLE_SERVER);
             return zkClient.getChildren(path);
@@ -115,7 +115,7 @@ public class ZkUtils {
      * @param zkType
      * @return
      */
-    public static boolean deleteNode(String parentPath, String path, ZkType zkType) {
+    public boolean deleteNode(String parentPath, String path, ZkType zkType) {
         try {
             path = toNodePath(parentPath, path, zkType);
             return zkClient.delete(path);
@@ -129,7 +129,7 @@ public class ZkUtils {
      *
      * @return
      */
-    public static boolean deleteAllNodes() {
+    public boolean deleteAllNodes() {
         try {
             String path = toNodeTypePath(ZkType.AVAILABLE_SERVER);
             return zkClient.delete(path);
@@ -146,7 +146,7 @@ public class ZkUtils {
      * @param zkType
      * @return
      */
-    public static boolean exist(String parentPath, String path, ZkType zkType) {
+    public boolean exist(String parentPath, String path, ZkType zkType) {
         try {
             path = toNodePath(parentPath, path, zkType);
             return zkClient.exists(path);
@@ -158,7 +158,7 @@ public class ZkUtils {
     /**
      * 关闭ZooKeeper客户端
      */
-    public static void closeZkClient() {
+    public void closeZkClient() {
         zkClient.close();
     }
 
@@ -186,12 +186,12 @@ public class ZkUtils {
         this.timeout = timeout;
     }
 
-    public static ZkClient getZkClient() {
+    public ZkClient getZkClient() {
         return zkClient;
     }
 
-    public static void setZkClient(ZkClient zkClient) {
-        ZkUtils.zkClient = zkClient;
+    public void setZkClient(ZkClient zkClient) {
+        this.zkClient = zkClient;
     }
 
     /**

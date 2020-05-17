@@ -10,6 +10,7 @@
         <module name="redisson-framework" />
         <module name="redis-dao-mybatis-plus" />
         <module name="redis-dao-mybatis-custom" />
+        <module name="redis-monitor-bootstrap" />
         <module name="redis-monitor-zookeeper" />
         <module name="redis-monitor-common" />
         <module name="redis-monitor-service" />

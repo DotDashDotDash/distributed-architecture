@@ -16,6 +16,7 @@
         <module>redis-monitor-service</module>
         <module>redis-monitor-zookeeper</module>
         <module>redis-monitor-dao</module>
+        <module>redis-monitor-bootstrap</module>
     </modules>
 
     <properties>

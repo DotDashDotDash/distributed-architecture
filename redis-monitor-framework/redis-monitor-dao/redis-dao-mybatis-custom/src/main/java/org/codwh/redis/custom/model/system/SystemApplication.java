@@ -33,6 +33,11 @@ public class SystemApplication implements Serializable {
     private String jmxHost;
 
     /**
+     * JMX端口号
+     */
+    private Integer jmxPort;
+
+    /**
      * JMX用户名
      */
     private String jmxUserName;
@@ -148,5 +153,13 @@ public class SystemApplication implements Serializable {
 
     public void setJmxStatus(Integer jmxStatus) {
         this.jmxStatus = jmxStatus;
+    }
+
+    public Integer getJmxPort() {
+        return jmxPort;
+    }
+
+    public void setJmxPort(Integer jmxPort) {
+        this.jmxPort = jmxPort;
     }
 }

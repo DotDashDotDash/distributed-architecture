@@ -5,6 +5,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-monitor-framework/redis-monitor-service/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-monitor-framework/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -8,13 +8,13 @@ import java.util.*;
 @SuppressWarnings("all")
 public class DateUtils {
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd";
-    private static final String TIME_FORMAT = "HH:mm:ss";
-    private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
-    private static final long MILLI_SECONDS_ONE_DAY = 1000 * 3600 * 24;
-    private static final long SECONDS_ONE_DAY = 3600 * 24;
-    private static final long MINUTES_ONE_DAY = 60 * 24;
-    private static final long HOURS_ONE_DAY = 24;
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "HH:mm:ss";
+    public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final long MILLI_SECONDS_ONE_DAY = 1000 * 3600 * 24;
+    public static final long SECONDS_ONE_DAY = 3600 * 24;
+    public static final long MINUTES_ONE_DAY = 60 * 24;
+    public static final long HOURS_ONE_DAY = 24;
     /**
      * 工作日
      */
