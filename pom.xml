@@ -6,6 +6,8 @@
     <groupId>org.codwh</groupId>
     <artifactId>scalable-framework</artifactId>
     <version>1.0.0</version>
+
+
     <modules>
         <module>redisson-framework</module>
         <module>common-framework</module>
