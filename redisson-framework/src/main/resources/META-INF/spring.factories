@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.codwh.redisson.config.RedissonAutoConfiguration,\
-  org.codwh.redisson.config.SpelConfiguration
