@@ -2,7 +2,7 @@
 
 ## 1. Servlet3新特性
 
-<div align=center><img src="../assets/tomcat.png"/></div>
+<div align=center><img src="../assets/tomcat.png" width=500px/></div>
 
 上面是Tomcat的主要架构图，异步特性主要发生在Connector中。在Servlet3之前，仅仅支持BIO，从接收到HTTP请求到完成处理返回响应，所有的操作都是在Tomcat中的同一个线程内完成的，而Tomcat内置默认的线程数是100，也就是说如果同时有多于100的请求，Tomcat只能处理100，剩下的请求需要等待，也就是被阻塞了。
 
