@@ -11,11 +11,15 @@
 ### :aerial_tramway:资源隔离
 
 * [线程隔离](./doc/线程隔离.md)
-* [基于Servlet3.0异步特性实现请求隔离](./doc/基于Servlet3.0异步特性实现请求隔离.md)
+* [基于Servlet3.0异步特性实现请求隔离](./doc/基于Servlet3异步特性实现请求隔离.md)
 
 ###  :card_file_box:服务调用
 
 * [微服务架构中使用进程通信](./doc/微服务架构中使用进程通信.md)
+
+### :film_projector:服务保护
+
+* [Hystrix对服务熔断限流保护](./doc/Hystrix对服务熔断限流保护.md)
 
 ### :thought_balloon:编程思想
 
