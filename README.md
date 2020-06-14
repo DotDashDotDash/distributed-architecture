@@ -19,7 +19,8 @@
 
 ### :film_projector:服务保护
 
-* [Hystrix对服务熔断限流保护](./doc/Hystrix对服务熔断限流保护.md)
+* [Hystrix对服务熔断保护](./doc/Hystrix对服务熔断限流保护.md)
+* [高并发限流措施原理与案例](./doc/高并发限流原理与案例.md)
 
 ### :thought_balloon:编程思想
 
